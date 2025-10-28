@@ -67,7 +67,6 @@ const useUserStore = createStore<UserState>(
         try {
           set({ isLoading: true, error: null });
 
-          // OAuth2 form data format
           const formData = new URLSearchParams();
           formData.append("username", username);
           formData.append("password", password);
@@ -120,7 +119,6 @@ const useUserStore = createStore<UserState>(
 
           const userData = response.data;
 
-          // After signup, auto-login to get token
           const formData = new URLSearchParams();
           formData.append("username", username);
           formData.append("password", password);
