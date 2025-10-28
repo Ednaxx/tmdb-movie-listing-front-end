@@ -11,7 +11,9 @@ interface LoginFormProps {
   };
   isLoading: boolean;
   error: string | null;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 

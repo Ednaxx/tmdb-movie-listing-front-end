@@ -15,7 +15,9 @@ export const useSignup = () => {
   const isAuth = useUserStore((state) => state.isAuth);
   const clearError = useUserStore((state) => state.clearError);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({
