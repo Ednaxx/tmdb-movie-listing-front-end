@@ -3,7 +3,7 @@ import { useUserStore } from "../../store";
 
 export const useLogin = () => {
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -30,7 +30,7 @@ export const useLogin = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!formData.email.trim() || !formData.password.trim()) {
+    if (!formData.username.trim() || !formData.password.trim()) {
       return;
     }
 

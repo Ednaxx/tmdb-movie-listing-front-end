@@ -1,12 +1,12 @@
 import React from "react";
-import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaUser, FaLock } from "react-icons/fa";
 import FormInput from "../shared/FormInput";
 import LoadingButton from "../shared/LoadingButton";
 import AlertMessage from "../shared/AlertMessage";
 
 interface LoginFormProps {
   formData: {
-    email: string;
+    username: string;
     password: string;
   };
   isLoading: boolean;
@@ -29,17 +29,17 @@ const LoginForm = ({
       {error && <AlertMessage type="error" message={error} />}
 
       <FormInput
-        label="Email"
-        id="email"
-        name="email"
-        type="email"
-        value={formData.email}
+        label="Username"
+        id="username"
+        name="username"
+        type="text"
+        value={formData.username}
         onChange={handleInputChange}
-        placeholder="Enter your email"
-        icon={FaEnvelope}
+        placeholder="Enter your username"
+        icon={FaUser}
         required
         disabled={isLoading}
-        autoComplete="email"
+        autoComplete="username"
       />
 
       <FormInput
@@ -59,7 +59,7 @@ const LoginForm = ({
       <LoadingButton
         type="submit"
         disabled={
-          isLoading || !formData.email.trim() || !formData.password.trim()
+          isLoading || !formData.username.trim() || !formData.password.trim()
         }
         isLoading={isLoading}
         loadingText="Signing in..."

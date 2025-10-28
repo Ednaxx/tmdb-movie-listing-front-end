@@ -12,26 +12,15 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   return config;
 });
 
-interface AuthResponse {
-  token: string;
-  username: string;
-  email: string;
-}
-
-interface SignupResponse {
-  id: string;
-  username: string;
-  email: string;
-}
-
 interface ErrorResponse {
-  message: string;
+  detail: string;
 }
 
 interface UserState {
   token: string | null;
   username: string | null;
   email: string | null;
+  userId: string | null;
   isAuthenticated: boolean;
   isAuth: boolean;
   isLoading: boolean;
@@ -40,16 +29,15 @@ interface UserState {
   setError: (error: string | null) => void;
   clearError: () => void;
   authenticate: (credentials: {
-    email: string;
+    username: string;
     password: string;
-  }) => Promise<{ success: boolean; data?: AuthResponse; error?: string }>;
+  }) => Promise<{ success: boolean; error?: string }>;
   signup: (signupData: {
     username: string;
     email: string;
     password: string;
   }) => Promise<{
     success: boolean;
-    data?: SignupResponse;
     message?: string;
     error?: string;
   }>;
@@ -63,6 +51,7 @@ const useUserStore = createStore<UserState>(
       token: null,
       username: null,
       email: null,
+      userId: null,
       isAuthenticated: false,
       isAuth: false,
       isLoading: false,
@@ -73,29 +62,34 @@ const useUserStore = createStore<UserState>(
       clearError: () => set({ error: null }),
 
       authenticate: async (credentials) => {
-        const { email, password } = credentials;
+        const { username, password } = credentials;
 
         try {
           set({ isLoading: true, error: null });
 
-          const response = await api.post("/auth/login", {
-            email,
-            password,
+          // OAuth2 form data format
+          const formData = new URLSearchParams();
+          formData.append("username", username);
+          formData.append("password", password);
+
+          const response = await api.post("/users/token", formData, {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
           });
 
-          const { token, username, email: userEmail } = response.data;
+          const { access_token } = response.data;
 
           set({
-            token,
+            token: access_token,
             username,
-            email: userEmail,
             isAuthenticated: true,
             isAuth: true,
             isLoading: false,
             error: null,
           });
 
-          return { success: true, data: response.data };
+          return { success: true };
         } catch (err) {
           const error = err as AxiosError<ErrorResponse>;
           const errorMessage =
@@ -118,23 +112,32 @@ const useUserStore = createStore<UserState>(
         try {
           set({ isLoading: true, error: null });
 
-          const response = await api.post("/auth/signup", {
+          const response = await api.post("/users/register", {
             username,
             email,
             password,
           });
 
-          const {
-            token,
-            username: newUsername,
-            email: newEmail,
-          } = response.data;
+          const userData = response.data;
 
-          // Auto-login after successful signup
+          // After signup, auto-login to get token
+          const formData = new URLSearchParams();
+          formData.append("username", username);
+          formData.append("password", password);
+
+          const loginResponse = await api.post("/users/token", formData, {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          });
+
+          const { access_token } = loginResponse.data;
+
           set({
-            token,
-            username: newUsername,
-            email: newEmail,
+            token: access_token,
+            username: userData.username,
+            email: userData.email,
+            userId: userData.id,
             isAuthenticated: true,
             isAuth: true,
             isLoading: false,
@@ -143,16 +146,16 @@ const useUserStore = createStore<UserState>(
 
           return {
             success: true,
-            data: response.data,
             message: "Account created successfully!",
           };
         } catch (err) {
           const error = err as AxiosError<ErrorResponse>;
           let errorMessage: string;
 
+          const detail = error.response?.data?.detail || "";
           if (
-            error.response?.data?.message.includes("already exists") ||
-            error.response?.data?.message.includes("already registered")
+            detail.includes("already exists") ||
+            detail.includes("already registered")
           ) {
             errorMessage = "Email or username already exists";
           } else {
@@ -174,6 +177,7 @@ const useUserStore = createStore<UserState>(
           token: null,
           username: null,
           email: null,
+          userId: null,
           isAuthenticated: false,
           isAuth: false,
           isLoading: false,
