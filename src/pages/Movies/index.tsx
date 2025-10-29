@@ -125,15 +125,17 @@ const Movies = () => {
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
                 >
                   <div className="relative">
-                    <img
-                      src={getImageUrl(movie.poster_path)}
-                      alt={movie.title}
-                      className="w-full h-80 object-cover"
-                    />
+                    <Link to={`/movie/${movie.id}`} className="block">
+                      <img
+                        src={getImageUrl(movie.poster_path)}
+                        alt={movie.title}
+                        className="w-full h-80 object-cover"
+                      />
+                    </Link>
                     <button
                       onClick={() => handleToggleFavorite(movie)}
                       disabled={favoritesLoading}
-                      className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors"
+                      className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors z-10"
                     >
                       {isFavorite(movie.id) ? (
                         <FaHeart className="text-pink-600" size={20} />
@@ -142,8 +144,8 @@ const Movies = () => {
                       )}
                     </button>
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 line-clamp-2 mb-2">
+                  <Link to={`/movie/${movie.id}`} className="block p-4">
+                    <h3 className="font-semibold text-gray-900 line-clamp-2 mb-2 hover:text-purple-600 transition-colors">
                       {movie.title}
                     </h3>
                     <div className="flex items-center justify-between text-sm">
@@ -159,7 +161,7 @@ const Movies = () => {
                         </span>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               ))}
             </div>

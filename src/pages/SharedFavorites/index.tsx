@@ -96,9 +96,10 @@ const SharedFavorites = () => {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
               {favorites.map((favorite) => (
-                <div
+                <Link
                   key={favorite.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+                  to={`/movie/${favorite.tmdb_movie_id}`}
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow block"
                 >
                   <div className="relative">
                     <img
@@ -111,11 +112,11 @@ const SharedFavorites = () => {
                     </div>
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 line-clamp-2">
+                    <h3 className="font-semibold text-gray-900 line-clamp-2 hover:text-purple-600 transition-colors">
                       {favorite.movie_title}
                     </h3>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </>

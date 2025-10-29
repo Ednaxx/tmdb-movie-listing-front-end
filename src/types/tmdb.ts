@@ -22,6 +22,71 @@ export interface MovieDetails extends Movie {
   status: string;
   tagline: string;
   homepage: string;
+  credits?: {
+    cast: CastMember[];
+    crew: CrewMember[];
+  };
+  videos?: {
+    results: Video[];
+  };
+  images?: {
+    backdrops: Image[];
+    posters: Image[];
+  };
+  recommendations?: {
+    results: Movie[];
+  };
+  similar?: {
+    results: Movie[];
+  };
+  reviews?: {
+    results: Review[];
+  };
+}
+
+export interface CastMember {
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+  order: number;
+}
+
+export interface CrewMember {
+  id: number;
+  name: string;
+  job: string;
+  department: string;
+  profile_path: string | null;
+}
+
+export interface Video {
+  id: string;
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+  official: boolean;
+}
+
+export interface Image {
+  file_path: string;
+  width: number;
+  height: number;
+  aspect_ratio: number;
+}
+
+export interface Review {
+  id: string;
+  author: string;
+  content: string;
+  created_at: string;
+  author_details: {
+    name: string;
+    username: string;
+    avatar_path: string | null;
+    rating: number | null;
+  };
 }
 
 export interface SearchMoviesResponse {
@@ -32,11 +97,11 @@ export interface SearchMoviesResponse {
 }
 
 export interface FavoriteMovie {
-  id: number;
+  id: string;
   tmdb_movie_id: number;
   movie_title: string;
   movie_poster_path: string | null;
-  created_at: string;
+  added_at: string;
 }
 
 export interface FavoriteMovieCreate {

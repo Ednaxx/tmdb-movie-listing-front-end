@@ -160,32 +160,39 @@ const Favorites = () => {
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
               >
                 <div className="relative">
-                  <img
-                    src={getImageUrl(favorite.movie_poster_path)}
-                    alt={favorite.movie_title}
-                    className="w-full h-80 object-cover"
-                  />
+                  <Link
+                    to={`/movie/${favorite.tmdb_movie_id}`}
+                    className="block"
+                  >
+                    <img
+                      src={getImageUrl(favorite.movie_poster_path)}
+                      alt={favorite.movie_title}
+                      className="w-full h-80 object-cover"
+                    />
+                  </Link>
                   <div className="absolute top-2 left-2 bg-pink-600 text-white px-2 py-1 rounded-full flex items-center gap-1">
                     <FaHeart size={12} />
                   </div>
                   <button
                     onClick={() => removeFavorite(favorite.tmdb_movie_id)}
                     disabled={isLoading}
-                    className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-lg hover:bg-red-50 transition-colors"
+                    className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-lg hover:bg-red-50 transition-colors z-10"
                     title="Remove from favorites"
                   >
                     <FaTrash className="text-red-600" size={16} />
                   </button>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-gray-900 line-clamp-2 mb-2">
+                <Link
+                  to={`/movie/${favorite.tmdb_movie_id}`}
+                  className="block p-4"
+                >
+                  <h3 className="font-semibold text-gray-900 line-clamp-2 mb-2 hover:text-purple-600 transition-colors">
                     {favorite.movie_title}
                   </h3>
                   <div className="text-xs text-gray-500">
-                    Added on{" "}
-                    {new Date(favorite.created_at).toLocaleDateString()}
+                    Added on {new Date(favorite.added_at).toLocaleDateString()}
                   </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>

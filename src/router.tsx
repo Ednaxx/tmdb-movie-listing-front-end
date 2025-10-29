@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import Movies from "./pages/Movies";
 import Favorites from "./pages/Favorites";
 import SharedFavorites from "./pages/SharedFavorites";
+import MovieDetails from "./pages/MovieDetails";
 
 // Guard to protect routes that require authentication
 const RouterGuard = ({ children }: { children: React.ReactNode }) => {
@@ -36,6 +37,14 @@ const router = createBrowserRouter([
     element: (
       <RouterGuard>
         <Favorites />
+      </RouterGuard>
+    ),
+  },
+  {
+    path: "/movie/:movieId",
+    element: (
+      <RouterGuard>
+        <MovieDetails />
       </RouterGuard>
     ),
   },

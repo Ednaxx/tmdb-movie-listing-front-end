@@ -18,7 +18,12 @@ export const tmdbService = {
   },
 
   getMovieDetails: async (movieId: number) => {
-    const response = await api.get<MovieDetails>(`/tmdb/movie/${movieId}`);
+    const response = await api.get<MovieDetails>(`/tmdb/movie/${movieId}`, {
+      params: {
+        append_to_response:
+          "credits,videos,images,recommendations,similar,reviews",
+      },
+    });
     return response.data;
   },
 
