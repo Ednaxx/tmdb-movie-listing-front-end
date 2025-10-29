@@ -181,6 +181,11 @@ const useUserStore = createStore<UserState>(
           isLoading: false,
           error: null,
         });
+
+        // Import and clear favorites store dynamically to avoid circular dependency
+        import("./favorites").then(({ useFavoritesStore }) => {
+          useFavoritesStore.getState().clearFavoritesData();
+        });
       },
     };
   },

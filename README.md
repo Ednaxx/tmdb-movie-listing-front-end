@@ -15,7 +15,7 @@ A modern React application for searching movies, managing favorites, and sharing
 
 ## Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 - A running instance of the [TMDB Movie Listing Backend](https://github.com/Ednaxx/tmdb-movie-listing-back-end)
 
@@ -24,30 +24,33 @@ A modern React application for searching movies, managing favorites, and sharing
 ### Option 1: Local Setup
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/Ednaxx/tmdb-movie-listing-front-end.git
    cd tmdb-movie-listing-front-end
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Configure the API endpoint**
-   
+
    ```bash
    cp .env.template .env
    # Then edit the variables according to you environment.
    ```
 
 4. **Start the development server**
+
    ```bash
    npm run dev
    ```
 
 5. **Open your browser**
-   
+
    Navigate to `http://localhost:3000`
 
 ### Option 2: Dev Container Setup
@@ -60,6 +63,7 @@ This project includes a dev container configuration for a consistent development
    - [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 2. **Open in container**
+
    ```bash
    git clone https://github.com/Ednaxx/tmdb-movie-listing-front-end.git
    cd tmdb-movie-listing-front-end
@@ -67,23 +71,25 @@ This project includes a dev container configuration for a consistent development
    ```
 
 3. **Reopen in container**
-   
+
    When prompted by VS Code, click "Reopen in Container" or press `F1` and select "Dev Containers: Reopen in Container"
 
 4. **Install dependencies**
-   
+
    Once the container is built and running:
+
    ```bash
    npm install
    ```
 
 5. **Start the development server**
+
    ```bash
    npm run dev
    ```
 
 6. **Access the application**
-   
+
    The dev container automatically forwards port 3000, so you can access the app at `http://localhost:3000` from your host machine's browser.
 
 ## Available Scripts

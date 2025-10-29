@@ -16,6 +16,7 @@ interface FavoritesState {
   generateShareLink: () => Promise<void>;
   revokeShareLink: () => Promise<void>;
   clearError: () => void;
+  clearFavoritesData: () => void;
 }
 
 const useFavoritesStore = createStore<FavoritesState>(
@@ -119,6 +120,15 @@ const useFavoritesStore = createStore<FavoritesState>(
     },
 
     clearError: () => set({ error: null }),
+
+    clearFavoritesData: () =>
+      set({
+        favorites: [],
+        isLoading: false,
+        error: null,
+        shareToken: null,
+        shareUrl: null,
+      }),
   }),
   true,
 );

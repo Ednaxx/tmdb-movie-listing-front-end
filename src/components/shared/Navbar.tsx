@@ -1,14 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import { FaFilm, FaSignOutAlt } from "react-icons/fa";
 import { useUserStore } from "../../store";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const username = useUserStore((state) => state.username);
   const logout = useUserStore((state) => state.logout);
 
   const handleLogout = () => {
     logout();
-    window.location.href = "/";
+    navigate("/", { replace: true });
   };
 
   return (
